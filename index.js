@@ -1,15 +1,13 @@
-const {CommitmentApi, verify} = require("./src/commit-api");
-// key is used to make sure that the message stays collision safe
-const key = require("./src/sha256")("pizza-pie");
-console.log(key);
+const BlockChain = require("./src/workless-blockchain");
 
-const api = new CommitmentApi(key);
-const message = "Old is Gold";
-const wrongMessage = "New is Bleu";
+let bc = new BlockChain("mozarella");
 
-const {commit} = api.commit(message);
+bc.addBlock(45);
+bc.addBlock(78);
+bc.addBlock(19);
+bc.addBlock(4);
+bc.printBlockChain();
 
-console.log(commit);
-
-console.log(verify(commit, key, message));
-console.log(verify(commit, key, wrongMessage));
+console.log(bc.verifyBlockChain());
+bc.next.next.data = 42;
+console.log(bc.verifyBlockChain());
