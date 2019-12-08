@@ -1,18 +1,15 @@
-const crypto = require("crypto");
+const {CommitmentApi, verify} = require("./src/commit-api");
+// key is used to make sure that the message stays collision safe
+const key = require("./src/sha256")("pizza-pie");
+console.log(key);
 
-function sha256(message) {
-  return crypto
-    .createHash("sha256")
-    .update(message)
-    .digest("hex");
-}
+const api = new CommitmentApi(key);
+const message = "Old is Gold";
+const wrongMessage = "New is Bleu";
 
-function hashChain(message, length) {
-  let final = sha256(message);
-  for (let i = 1; i < length; ++i) {
-    final = sha256(final);
-  }
-  return final;
-}
+const {commit} = api.commit(message);
 
-console.log(hashChain("hi", 100));
+console.log(commit);
+
+console.log(verify(commit, key, message));
+console.log(verify(commit, key, wrongMessage));
