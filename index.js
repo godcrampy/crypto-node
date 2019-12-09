@@ -1,6 +1,6 @@
-const BlockChain = require("./src/workless-blockchain");
+const BlockChain = require("./src/blockchain");
 
-let bc = new BlockChain("mozarella");
+let bc = new BlockChain("mozarella", 5);
 
 bc.addBlock(45);
 bc.addBlock(78);
