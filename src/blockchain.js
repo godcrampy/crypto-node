@@ -14,9 +14,9 @@ class Block {
     this.next = null;
     this.nonce = 0;
     this.workDifficulty = workDifficulty;
-    this.validateBlock();
+    this.mine();
   }
-  validateBlock() {
+  mine() {
     const message = this.data + this.previousHash;
     this.nonce = proofOfWork(sha256, message, this.workDifficulty);
   }
@@ -57,7 +57,7 @@ class BlockChain {
   printBlockChain() {
     let itr = this.next;
     while (itr !== null) {
-      console.log(`Data: ${itr.data}, prevHash: ${itr.previousHash}`);
+      console.log(`Data: ${itr.data}, prevHash: ${itr.previousHash}, nonce: ${itr.nonce}`);
       itr = itr.next;
     }
   }
